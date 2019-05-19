@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 김준성 -->
+<mapper namespace="com.todo.mapper.TodoMapper">
+
+	<resultMap type="TodoDTO" id="todoDTO">
+		<id property="todoId" column="todo_id"/>
+		<id property="title" column="title"/>
+		<id property="content" column="content"/>
+		<id property="priority" column="priority"/>
+		<id property="deadline" column="deadline"/>
+		<id property="startDate" column="startdate"/>
+		<id property="endDate" column="enddate"/>
+		<id property="statusId" column="status_id"/>
+		<association property="todoId" column="todo_id"></association>
+	</resultMap>
+	<insert id="createTodo" parameterType="todoDTO">
+		INSERT INTO todo (todo_id, title, content, priority, deadline, startdate, enddate, status_id) 
+		VALUES(#{todoId}, #{title}, #{content}, #{priority}, #{deadline}, #{startDate}, #{endDate}, #{statusId})	
+	</insert>
+	
+	<delete id="deleteTodo" parameterType="todoDTO">
+		DELETE FROM todo WHERE todo_id = #{todoId}
+	</delete>
+	
+	<delete id="deleteTodos" parameterType="map">
+		DELETE FROM todo
+		WHERE
+		todo_id in
+		<foreach collection="array" item="todoId" open="(" close=")" separator=",">
+             #{todoId}
+        </foreach>
+	</delete>
+	
+	<update id="updateTodo" parameterType="todoDTO">
+		UPDATE todo SET title = #{title}, content = #{content} WHERE todo_id = #{todoId}
+	</update>
+	
+	<update id="updatePriority" parameterType="todoDTO">
+			UPDATE todo SET priority = #{priority} WHERE todo_id = #{todoId}
+	</update>
+	
+	<select id="getTodoList" resultMap="todoDTO">
+		SELECT 
+			todo_id, title, content, priority, deadline, startdate, enddate, status_id
+		FROM
+			todo
+	</select>
+	
+	<select id="getTodo" parameterType="String" resultType="todoDTO">
+		SELECT
+			todo_id as 'todoId', title, content, priority, startdate, enddate, status_id as 'statusId'
+		FROM
+			todo
+		WHERE
+			todo_id = #{todoId}
+	</select>		
+</mapper>

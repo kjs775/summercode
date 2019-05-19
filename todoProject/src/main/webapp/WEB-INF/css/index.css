@@ -1,0 +1,21 @@
+@charset "utf-8";
+.head{
+	height: 20%;
+	border: black 1px solid;
+	margin: 0;
+	text-align: center;
+}
+
+.nav{
+	height: 10%;
+	border: blue 1px solid;
+	margin: 0;
+	text-align: center;
+}
+
+.main{
+	height: 60%;
+	border: red 1px solid;
+	margin: 0;
+	text-align: center;
+}
